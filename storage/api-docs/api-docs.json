@@ -1,0 +1,259 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Order Management API",
+        "description": "This is an example API for order management",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/",
+            "description": "Base path for all Order CRUD API endpoints"
+        }
+    ],
+    "paths": {
+        "/currencies": {
+            "get": {
+                "tags": [
+                    "currency Management"
+                ],
+                "summary": "Get currencies list",
+                "description": "Retrieves currencies list.",
+                "operationId": "11ba51d6025f25a760f405e99468818d",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CurrencySchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found"
+                    }
+                }
+            }
+        },
+        "/rates": {
+            "get": {
+                "tags": [
+                    "currency Management"
+                ],
+                "summary": "Get a rate of tow symbol",
+                "description": "Retrieves  rate of tow symbol.",
+                "operationId": "10684f452931827fb2621202644d82cf",
+                "parameters": [
+                    {
+                        "name": "first_symbol",
+                        "in": "query",
+                        "description": "first currency symbol",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "second_symbol",
+                        "in": "query",
+                        "description": "second currency symbol",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RateSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Rate not found"
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "tags": [
+                    "order Management"
+                ],
+                "summary": "Get a order by tracking_code",
+                "description": "Retrieves a single order identified by its tracking_code.",
+                "operationId": "66ab99ef063b867668ed59b7ec280e52",
+                "parameters": [
+                    {
+                        "name": "tracking_code",
+                        "in": "query",
+                        "description": "tracking_code of the order",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "order Management"
+                ],
+                "summary": "Create a new order",
+                "description": "Creates a new order with the provided details.",
+                "operationId": "b6490f9d9026dbe871b41207e118fffb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateOrderSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "order created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OrderSchema"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GetRateSchema": {
+                "properties": {
+                    "first_symbol": {
+                        "description": "currency first symbol",
+                        "type": "string"
+                    },
+                    "second_symbol": {
+                        "description": "currency second symbol",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateOrderSchema": {
+                "properties": {
+                    "email": {
+                        "description": "order's email address",
+                        "type": "string"
+                    },
+                    "first_symbol": {
+                        "description": "currency to get",
+                        "type": "string"
+                    },
+                    "second_symbol": {
+                        "description": "currency to pay",
+                        "type": "string"
+                    },
+                    "amount": {
+                        "description": "amount of second_symbol to pay and first_symbol to receive",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "CurrencySchema": {
+                "properties": {
+                    "id": {
+                        "description": "Currency ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Currency name",
+                        "type": "string"
+                    },
+                    "symbol": {
+                        "description": "Currency symbol",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "OrderSchema": {
+                "properties": {
+                    "tracking_code": {
+                        "description": "Order tracking_code",
+                        "type": "integer"
+                    },
+                    "amount_paid": {
+                        "description": "amount_paid",
+                        "type": "string"
+                    },
+                    "amount_received": {
+                        "description": "amount_received",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "status",
+                        "type": "string"
+                    },
+                    "email_address": {
+                        "description": "Order email address",
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "description": "Order updated_at datetime",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "description": "Order created_at datetime",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "RateSchema": {
+                "properties": {
+                    "price": {
+                        "description": "rate price",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
