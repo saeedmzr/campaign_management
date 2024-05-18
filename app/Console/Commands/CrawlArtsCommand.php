@@ -81,6 +81,7 @@ class CrawlArtsCommand extends Command
                     "raw_id" => $item['id'],
                 ], [
                     "name" => $item['name'],
+                    "description" => $item['voterSubmissionPromptResponse'],
                     "countryOfResidence" => $item['countryOfResidence'],
                     "title" => $item['title'],
                     "submission" => $item['submission'],

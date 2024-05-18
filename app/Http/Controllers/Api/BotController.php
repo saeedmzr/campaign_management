@@ -90,9 +90,14 @@ class BotController extends BaseController
 
         $user = $this->userRepository->findByChatId($from['id']);
         $compare = $this->redisService->getMessageFromRedis("compare-$user->id");
+        if (!$compare) {
+            $firstArtId = $likedOne;
+            $secondArt = 0;
+        } else {
+            $firstArtId = $compare['first_art'];
+            $secondArt = $compare['second_art'];
+        }
 
-        $firstArtId = $compare['first_art'];
-        $secondArt = $compare['second_art'];
 
         if ($firstArtId == $likedOne) {
             $didntLikeId = $secondArt;
@@ -124,8 +129,7 @@ class BotController extends BaseController
         Log::error(json_encode($getTwo));
         if (!$getTwo) {
             $art = $this->artRepository->findById($likedArt);
-            return $this->telegramService->sendPhoto($chatId, storage_path('app/public/images/' . $art->image_path),
-                "You choose $art->title as the best submission. Thank you.");
+            return $this->sendArt($chatId, $art, true);
         }
 
 
@@ -135,11 +139,36 @@ class BotController extends BaseController
             $art = $this->artRepository->findById($artId);
             $buttons[] = ["text" => "$art->name", "data" => "like$art->id"];
 
-            $this->telegramService->sendPhoto($chatId, storage_path('app/public/images/' . $art->image_path), $art->name);
+            $this->sendArt($chatId, $art);
         }
         $text = "Which one is better?";
-        $keyboard = $this->telegramService->makeInlineKeyboard($buttons);
+        $keyboard = $this->telegramService->makeInlineKeyboard([$buttons]);
         return $this->telegramService->sendMessage($chatId, $text, $keyboard);
+
+    }
+
+    private function sendArt($chatId, $art, $last = false)
+    {
+        $path = storage_path('app/public/images/' . $art->image_path);
+        if ($last) {
+            $caption = "🥇 You Choose this as the best submission. Thank you.🥇";
+
+        } else {
+            $caption = "";
+        }
+        $caption .= "🖊 By : $art->name \n";
+        $caption .= "🖊 Title : $art->title \n";
+        $caption .= "📝 Description : $art->title ";
+        $caption .= "🗺 Nationality : $art->countryOfResidence ";
+
+        $hqImageUrl = $art->submission['url'];
+        $buttons[] = ["text" => "Submission Page", "url" => "https://thehug.xyz/open-calls/art-for-life/submissions/$art->submissionId"];
+        $buttons[] = ["text" => "HQ Image", "url" => "$hqImageUrl"];
+        $buttons[] = ["text" => "Artist profile", "url" => "https://thehug.xyz/artists/$art->name"];
+
+        $keyboard = $this->telegramService->makePhotoKeyboard([$buttons]);
+
+        return $this->telegramService->sendPhoto($chatId, $path, $caption, $keyboard);
 
     }
 

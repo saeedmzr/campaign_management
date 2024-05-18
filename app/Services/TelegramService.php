@@ -136,15 +136,35 @@ class TelegramService
         return $final;
     }
 
-    public function makeInlineKeyboard($buttons)
+    public function makePhotoKeyboard($rows)
     {
 
         $keyboard = Keyboard::make()
             ->inline();
-        foreach ($buttons as $button) {
-            $keyboard->row([
-                Keyboard::inlineButton(['text' => $button['text'], 'callback_data' => $button['data']])
-            ]);
+        foreach ($rows as $row) {
+            $finalRow = [];
+            foreach ($row as $button) {
+                $finalRow[] = Keyboard::inlineButton(['text' => $button['text'], 'url' => $button['url']]);
+
+            }
+            $keyboard->row($finalRow);
+        }
+
+        return $keyboard;
+    }
+
+    public function makeInlineKeyboard($rows)
+    {
+
+        $keyboard = Keyboard::make()
+            ->inline();
+        foreach ($rows as $row) {
+            $finalRow = [];
+            foreach ($row as $button) {
+                $finalRow[] = Keyboard::inlineButton(['text' => $button['text'], 'callback_data' => $button['data']]);
+
+            }
+            $keyboard->row($finalRow);
         }
 
         return $keyboard;

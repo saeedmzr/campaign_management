@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string("name");
             $table->string("title");
             $table->json("submission");
+            $table->longText("description")->nullable();
             $table->longText("image_path")->nullable();
             $table->string("countryOfResidence");
             $table->foreignIdFor(Artist::class)->nullable();
