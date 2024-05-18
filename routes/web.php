@@ -88,21 +88,19 @@ Route::get("/", function () {
 
 Route::get("download", function () {
     foreach (Art::where("image_path", null)->get() as $art) {
-//        $responsee = Http::get($art->submission['url150']);
+        $responsee = Http::get($art->submission['url600']);
         // Get the image content
-//        if ($responsee->successful()) {
-//            $imageContent = $responsee->body();
+        if ($responsee->successful()) {
+            $imageContent = $responsee->body();
 
-        // Generate a unique filename based on the current time and original name
-        $filename = time() . '_' . basename($art->submission['url150']);
+        $filename = time() . '_' . basename($art->submission['url600']);
 
-        // Store the image in the storage/app/public folder
-//            Storage::put('public/images/' . $filename, $imageContent);
+            Storage::put('public/images/' . $filename, $imageContent);
 
         $art->update(
             ["image_path" => $filename]
         );
-//        }
+        }
 
 
     }
