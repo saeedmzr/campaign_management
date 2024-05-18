@@ -15,4 +15,21 @@ class ArtRepository extends BaseRepository
         $this->model = $model;
     }
 
+    public function getCompareTwoArts($likedArtId, $unlikedArtIds = [])
+    {
+        if (!$likedArtId) {
+            $firstId = $this->model
+                ->whereNotIn('id', $unlikedArtIds)->inRandomOrder()->first()->id;
+
+        } else {
+            $firstId = $likedArtId;
+        }
+        $unlikedArtIds[] = $firstId;
+        $secondId = $this->model
+            ->whereNotIn('id', $unlikedArtIds)->inRandomOrder()->first()->id;
+        if (!$secondId) return null;
+        return ["first_id" => $firstId, "second_id" => $secondId];
+
+    }
+
 }

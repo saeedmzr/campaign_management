@@ -16,4 +16,9 @@ class UserRepository extends BaseRepository
         $this->model = $model;
     }
 
+    public function findByChatId($chatId)
+    {
+        return $this->model->where("chat_id", $chatId)->first();
+    }
+
 }

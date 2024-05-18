@@ -17,11 +17,13 @@ return new class extends Migration {
             $table->string("name");
             $table->string("title");
             $table->json("submission");
+            $table->longText("image_path")->nullable();
             $table->string("countryOfResidence");
             $table->foreignIdFor(Artist::class)->nullable();
             $table->string('openCallId')->nullable();
             $table->longText("submissionId")->nullable();
             $table->timestamps();
+
         });
     }
 

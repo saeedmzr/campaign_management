@@ -2,23 +2,20 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Api\BotController;
 use App\Models\Currency;
 use App\Models\Rate;
-use App\Repositories\CurrencyRepository;
-use App\Repositories\RateRepository;
-use App\Services\CryptoService;
-use App\Services\Exchanger\FCSApi;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class UpdatingRatesCommand extends Command
+class UpdateMessageCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:updating-rates-command';
+    protected $signature = 'get:updates';
 
     /**
      * The console command description.
@@ -32,6 +29,7 @@ class UpdatingRatesCommand extends Command
      */
     public function handle()
     {
-
+        $botController = app(BotController::class);
+        $botController->getUpdates();
     }
 }

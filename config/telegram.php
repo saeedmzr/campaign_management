@@ -2,6 +2,7 @@
 
 use App\Services\CustomTelegramRequestHandler;
 use App\Telegram\Commands\StartCommand;
+use App\Telegram\Commands\VoteCommand;
 use Telegram\Bot\Commands\HelpCommand;
 
 return [
@@ -134,6 +135,7 @@ return [
     'commands' => [
         HelpCommand::class,
         StartCommand::class,
+        VoteCommand::class,
     ],
 
     /*

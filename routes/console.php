@@ -1,9 +1,9 @@
 <?php
 
-use App\Console\Commands\UpdatingRatesCommand;
+use App\Console\Commands\UpdateMessageCommand;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
 
-Schedule::command(UpdatingRatesCommand::class)->everyMinute();
+Schedule::command(UpdateMessageCommand::class)->everyFiveSeconds();
