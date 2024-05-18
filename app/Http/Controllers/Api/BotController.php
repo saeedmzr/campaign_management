@@ -62,7 +62,7 @@ class BotController extends BaseController
         Telegram::commandsHandler(true);
 
         $update = Telegram::getWebhookUpdate();
-        if (isset($update[0]['callback_query'])) {
+        if (isset($update['callback_query'])) {
             Log::error("khodafez");
             Log::error(json_encode($update));
             Log::error("khodafez");
