@@ -66,14 +66,12 @@ class BotController extends BaseController
             Log::error("khodafez");
             Log::error(json_encode($update));
             Log::error("khodafez");
-            $this->likeHandler($update[0]['callback_query']);
+            $this->likeHandler($update['callback_query']);
 
         } else {
             if (!empty($update)) {
                 Log::error("salam");
-                Log::error(json_encode($update));
-                Log::error("salam");
-                $chatId = $update[0]['message']['from']['id'];
+                $chatId = $update['message']['from']['id'];
                 $this->sendPhoto($chatId);
             }
 
