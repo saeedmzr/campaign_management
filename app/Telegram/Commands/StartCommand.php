@@ -26,7 +26,7 @@ class StartCommand extends Command
         $keyboardButtons = $this->telegramService->defaultKeyboards();
         $rowButtons = $this->telegramService->makeRowButtons($keyboardButtons);
         $keyboard = $this->telegramService->makeKeyboardButtons($rowButtons);
-        $this->replyWithMessage([
+        return $this->replyWithMessage([
             'text' => $text,
             'reply_markup' => $keyboard
         ]);

@@ -123,9 +123,8 @@ class BotController extends BaseController
         $getTwo = $this->artRepository->getCompareTwoArts($likedArt, $doesntLikeArts);
         if (!$getTwo) {
             $art = $this->artRepository->findById($likedArt);
-//            return $this->telegramService->sendPhoto($chatId, storage_path('app/public/images/' . $art->image_path),
-//                "You choose $art->title as the best submission. Thank you.");
-            return $this->telegramService->sendMessage($chatId, "You choose $art->title as the best submission. Thank you.");
+            return $this->telegramService->sendPhoto($chatId, storage_path('app/public/images/' . $art->image_path),
+                "You choose $art->title as the best submission. Thank you.");
         }
 
 
@@ -135,7 +134,7 @@ class BotController extends BaseController
             $art = $this->artRepository->findById($artId);
             $buttons[] = ["text" => "$art->name", "data" => "like$art->id"];
 
-//            $this->telegramService->sendPhoto($chatId, storage_path('app/public/images/' . $art->image_path), $art->name);
+            $this->telegramService->sendPhoto($chatId, storage_path('app/public/images/' . $art->image_path), $art->name);
         }
         $text = "Which one is better?";
         $keyboard = $this->telegramService->makeInlineKeyboard($buttons);
