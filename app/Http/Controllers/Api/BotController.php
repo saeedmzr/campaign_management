@@ -59,15 +59,19 @@ class BotController extends BaseController
     public function webhook()
     {
         Log::error("salm man omadam");
-        Telegram::commandsHandler(false);
+        Telegram::commandsHandler(true);
 
         $update = Telegram::getWebhookUpdate();
         if (isset($update[0]['callback_query'])) {
+            Log::error("khodafez");
+            Log::error(json_encode($update));
             Log::error("khodafez");
             $this->likeHandler($update[0]['callback_query']);
 
         } else {
             if (!empty($update)) {
+                Log::error("salam");
+                Log::error(json_encode($update));
                 Log::error("salam");
                 $chatId = $update[0]['message']['from']['id'];
                 $this->sendPhoto($chatId);
