@@ -137,12 +137,12 @@ class BotController extends BaseController
         $buttons = [];
         foreach ($getTwo as $artId) {
             $art = $this->artRepository->findById($artId);
-            $buttons[] = ["text" => "$art->name", "data" => "like$art->id"];
+            $buttons[] = ["text" => "🗳 $art->title by : $art->name", "data" => "like$art->id"];
 
             $this->sendArt($chatId, $art);
         }
         $text = "Which one is better?";
-        $keyboard = $this->telegramService->makeInlineKeyboard([$buttons]);
+        $keyboard = $this->telegramService->makeInlineKeyboard($buttons);
         return $this->telegramService->sendMessage($chatId, $text, $keyboard);
 
     }
@@ -164,9 +164,9 @@ class BotController extends BaseController
         $hqImageUrl = $art->submission['url'];
         $buttons[] = ["text" => "Submission Page", "url" => "https://thehug.xyz/open-calls/art-for-life/submissions/$art->submissionId"];
         $buttons[] = ["text" => "HQ Image", "url" => "$hqImageUrl"];
-        $buttons[] = ["text" => "Artist profile", "url" => "https://thehug.xyz/artists/$art->name"];
+        $ProfilesButtons[] = ["text" => "Artist profile", "url" => "https://thehug.xyz/artists/$art->name"];
 
-        $keyboard = $this->telegramService->makePhotoKeyboard([$buttons]);
+        $keyboard = $this->telegramService->makePhotoKeyboard([$buttons, $ProfilesButtons]);
 
         return $this->telegramService->sendPhoto($chatId, $path, $caption, $keyboard);
 
