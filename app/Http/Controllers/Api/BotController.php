@@ -136,11 +136,12 @@ class BotController extends BaseController
         $this->redisService->storeMessage($userId, $getTwo["first_id"], $getTwo["second_id"]);
         $buttons = [];
         $wichOneText = "Which one is better? \n";
+        $counter = 0;
         foreach ($getTwo as $key => $artId) {
+            $counter++;
             $art = $this->artRepository->findById($artId);
             $buttons[] = ["text" => "🗳 $art->title by : $art->name", "data" => "like$art->id"];
-            $k = $key+1;
-            $wichOneText .= "$k - 🎨 $art->title by : 👨‍🎨 $art->name \n";
+            $wichOneText .= "$counter - 🎨 $art->title by : 👨‍🎨 $art->name \n";
             $this->sendArt($chatId, $art);
         }
         $keyboard = $this->telegramService->makeInlineKeyboard($buttons);
