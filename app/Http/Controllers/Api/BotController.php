@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Art;
+use App\Models\Vote;
 use App\Repositories\ArtRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\VoteRepository;
@@ -144,9 +146,20 @@ class BotController extends BaseController
             $wichOneText .= "$counter - 🎨 $art->title by : 👨‍🎨 $art->name \n";
             $this->sendArt($chatId, $art);
         }
+        $remainingVotes = $this->calculateRemainingVotes($chatId);
+        $wichOneText .= "Remaining submissions to complete voting: $remainingVotes.";
+
         $keyboard = $this->telegramService->makeInlineKeyboard($buttons);
         return $this->telegramService->sendMessage($chatId, $wichOneText, $keyboard);
 
+    }
+
+    private function calculateRemainingVotes($chatId)
+    {
+        $user = $this->userRepository->findByChatId($chatId);
+        $artsCount = Art::all()->count();
+        $votes = $user->votes()->count();
+        return $artsCount - $votes;
     }
 
     private function sendArt($chatId, $art, $last = false)
