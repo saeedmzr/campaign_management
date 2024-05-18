@@ -161,7 +161,7 @@ class BotController extends BaseController
         $caption .= "👨‍🎨 By : $art->name \n";
         $caption .= "🎨 Title : $art->title \n";
         $caption .= "🗺 Nationality : $art->countryOfResidence \n";
-        $caption .= "📝 Description : $art->title ";
+        $caption .= "📝 Description : $art->description ";
 
         $hqImageUrl = $art->submission['url'];
         $buttons[] = ["text" => "Submission Page", "url" => "https://thehug.xyz/open-calls/art-for-life/submissions/$art->submissionId"];

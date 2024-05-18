@@ -61,7 +61,7 @@ class UpdateDescriptionsCommand extends Command
             if ($statusCode >= 200 && $statusCode < 300) {
                 // Success! Process the response data in $responseBody
                 $response = json_decode($responseBody, true);
-                $desc = $response['opencall']['voterSubmissionPromptResponse'];
+                $desc = $response['openCall']['voterSubmissionPromptResponse'];
                 $art->update([
                     "description" => $desc,
                 ]);
