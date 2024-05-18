@@ -15,6 +15,11 @@ Route::get("sendMessage", function () {
     $a->sendMessage("58360854", "hello");
 });
 
+Route::get("set",function (){
+   Telegram::setWebhook([
+       "url" => "https://bot.dadpardaz.com/api/webhook"
+   ]);
+});
 Route::post("webhook", [\App\Http\Controllers\Api\BotController::class, "webhook"]);
 Route::get("/", function () {
     $client = new Client();

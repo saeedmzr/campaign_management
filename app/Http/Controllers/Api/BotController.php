@@ -58,6 +58,7 @@ class BotController extends BaseController
 
     public function webhook()
     {
+        Log::error("salm man omadam");
         Telegram::commandsHandler(false);
 
         $update = Telegram::getWebhookUpdate();
