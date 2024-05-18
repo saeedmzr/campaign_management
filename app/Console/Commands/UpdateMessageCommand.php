@@ -3,10 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\Api\BotController;
-use App\Models\Currency;
-use App\Models\Rate;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class UpdateMessageCommand extends Command
 {
