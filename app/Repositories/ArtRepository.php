@@ -25,10 +25,10 @@ class ArtRepository extends BaseRepository
             $firstId = $likedArtId;
         }
         $unlikedArtIds[] = $firstId;
-        $secondId = $this->model
-            ->whereNotIn('id', $unlikedArtIds)->inRandomOrder()->first()->id;
-        if (!$secondId) return null;
-        return ["first_id" => $firstId, "second_id" => $secondId];
+        $second = $this->model
+            ->whereNotIn('id', $unlikedArtIds)->inRandomOrder()->first();
+        if (!$second) return null;
+        return ["first_id" => $firstId, "second_id" => $second->id];
 
     }
 

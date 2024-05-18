@@ -121,6 +121,7 @@ class BotController extends BaseController
         $likedArt = $this->voteRepository->getArtIdThatUserLiked($userId);
         $doesntLikeArts = $this->voteRepository->getArtsThatUserDidntLike($userId);
         $getTwo = $this->artRepository->getCompareTwoArts($likedArt, $doesntLikeArts);
+        Log::error(json_encode($getTwo));
         if (!$getTwo) {
             $art = $this->artRepository->findById($likedArt);
             return $this->telegramService->sendPhoto($chatId, storage_path('app/public/images/' . $art->image_path),
