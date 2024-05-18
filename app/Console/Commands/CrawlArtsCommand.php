@@ -68,13 +68,14 @@ class CrawlArtsCommand extends Command
             $response = json_decode($responseBody, true);
             foreach ($response['data'] as $item) {
                 if (isset($item['artistId']) && $item['artistId']) {
-                    $artist = \App\Models\Artist::create([
+                    $artist = \App\Models\Artist::updateOrCreate([
                         "artistId" => $item['artistId'],
+                    ], [
                         "userId" => $item['createdByUserId'],
                     ]);
                 }
 
-                \App\Models\Art::updateOrdCreate([
+                \App\Models\Art::updateOrCreate([
                     "artist_id" => $artist->id ?? null,
                     "submissionId" => $item['submissionId'],
                     "raw_id" => $item['id'],
