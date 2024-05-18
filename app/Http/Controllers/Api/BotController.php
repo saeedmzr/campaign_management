@@ -140,7 +140,7 @@ class BotController extends BaseController
         foreach ($getTwo as $key => $artId) {
             $counter++;
             $art = $this->artRepository->findById($artId);
-            $buttons[] = ["text" => "🗳 $art->title by : $art->name", "data" => "like$art->id"];
+            $buttons[] = [["text" => "🗳 $art->title by : $art->name", "data" => "like$art->id"]];
             $wichOneText .= "$counter - 🎨 $art->title by : 👨‍🎨 $art->name \n";
             $this->sendArt($chatId, $art);
         }
