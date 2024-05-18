@@ -14,6 +14,8 @@ Route::get("sendMessage", function () {
     $a = new \App\Services\TelegramService();
     $a->sendMessage("58360854", "hello");
 });
+
+Route::post("webhook", [\App\Http\Controllers\Api\BotController::class, "webhook"]);
 Route::get("/", function () {
     $client = new Client();
     $url = 'https://api.thehug.xyz/api/open-call/submissions';
@@ -86,15 +88,15 @@ Route::get("download", function () {
 //        if ($responsee->successful()) {
 //            $imageContent = $responsee->body();
 
-            // Generate a unique filename based on the current time and original name
-            $filename = time() . '_' . basename($art->submission['url150']);
+        // Generate a unique filename based on the current time and original name
+        $filename = time() . '_' . basename($art->submission['url150']);
 
-            // Store the image in the storage/app/public folder
+        // Store the image in the storage/app/public folder
 //            Storage::put('public/images/' . $filename, $imageContent);
 
-            $art->update(
-                ["image_path" => $filename]
-            );
+        $art->update(
+            ["image_path" => $filename]
+        );
 //        }
 
 
